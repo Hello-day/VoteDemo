@@ -54,10 +54,28 @@
         </div>
 
     <div class="visualizationOfHome">
-       <div class="viewOfvoteData">
-        <div class="voteChannel">
-          <transition-group name="list-complete" tag="p" appear>
 
+       <div class="viewOfvoteData">
+        <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
+
+          <transition-group name="list-complete" tag="p" appear>
+            <div v-show="flagOftext" class="textArea" :key="1">
+
+              <div class="headOfvoteData">
+                <span >投票频道1</span>
+              </div>
+              <div class="voteChannel">
+                <!--    现有投票-->
+                <div class="voteNowHave" >
+                  <div>
+                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
+                    <span>666</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+          <transition-group name="list-complete" tag="p" appear>
             <div v-show="flagOftext" class="textArea" :key="1">
 
               <div class="headOfvoteData">
@@ -75,10 +93,53 @@
             </div>
           </transition-group>
 
+          <transition-group name="list-complete" tag="p" appear>
+            <div v-show="flagOftext" class="textArea" :key="1">
+
+              <div class="headOfvoteData">
+                <span >投票频道1</span>
+              </div>
+              <div class="voteChannel">
+                <!--    现有投票-->
+                <div class="voteNowHave" >
+                  <div>
+                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
+                    <span>666</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+
+          <transition-group name="list-complete" tag="p" appear>
+            <div v-show="flagOftext" class="textArea" :key="1">
+
+              <div class="headOfvoteData">
+                <span >投票频道1</span>
+              </div>
+              <div class="voteChannel">
+                <!--    现有投票-->
+                <div class="voteNowHave" >
+                  <div>
+                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
+                    <span>666</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+
+          <div v-show="flagOfvoteData" class="voteDataArea" :key="2">
+            <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">保留项</span>
+          </div>
+
+
         </div>
 
-
        </div>
+
+
+
     </div>
     </div>
 </template>
@@ -204,7 +265,17 @@ export default {
     background-color: rgba(37,123,94,0.1);
   }
 
-
+.voteDataArea{
+  width: 95%;
+  height: 100px;
+  background-color: white;
+  margin-left: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
+}
   .voteNowHave{
     display: flex;
     flex-direction: column;
