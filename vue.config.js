@@ -24,8 +24,22 @@ module.exports = {
                 target: 'http://localhost:8080',
                 changeOrigin: true,
                 ['^/user']:'',
-                
-            }
+            },
+            '/channel':{
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                ['^/channel']:'',
+            },
+            '/vote':{
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                ['^/vote']:'',
+            },
+            '/option':{
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                ['^/option']:'',
+            },
         }
     },
 
