@@ -57,29 +57,12 @@
 
        <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
-
-          <transition-group name="list-complete" tag="p" appear>
+          <!--eslint-disable-next-line-->
+          <transition-group name="list-complete" tag="p" appear v-for="i in count">
             <div v-show="flagOftext" class="textArea" :key="1">
 
               <div class="headOfvoteData">
-                <span >投票频道1</span>
-              </div>
-              <div class="voteChannel">
-                <!--    现有投票-->
-                <div class="voteNowHave" >
-                  <div>
-                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </transition-group>
-          <transition-group name="list-complete" tag="p" appear>
-            <div v-show="flagOftext" class="textArea" :key="1">
-
-              <div class="headOfvoteData">
-                <span >投票频道1</span>
+                <span >投票频道{{i}}</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
@@ -111,27 +94,6 @@
             </div>
           </transition-group>
 
-          <transition-group name="list-complete" tag="p" appear>
-            <div v-show="flagOftext" class="textArea" :key="1">
-
-              <div class="headOfvoteData">
-                <span >投票频道1</span>
-              </div>
-              <div class="voteChannel">
-                <!--    现有投票-->
-                <div class="voteNowHave" >
-                  <div>
-                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </transition-group>
-
-          <div v-show="flagOfvoteData" class="voteDataArea" :key="2">
-            <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">保留项</span>
-          </div>
 
 
         </div>
@@ -152,6 +114,7 @@ export default {
   name: "Home",
   data(){
     return {
+      count:0,
       Num:'',
       Item:'',
       Voted:'',
@@ -166,6 +129,10 @@ export default {
     }
   },
   methods:{
+    load () {
+      this.count += 2
+    },
+
     displayNone(){
       this.$bus.$emit('voteCenterChange',this.flagOfvoteCenter)
     },
@@ -195,6 +162,7 @@ export default {
     this.loadItem(),
     this.loadNum(),
     this.loadVoted()
+    this.load()
   }
 }
 
