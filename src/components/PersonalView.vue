@@ -40,7 +40,7 @@
             <div class="IconArea">
                 <i style="position: relative ;display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
 line-height: 30px" class="el-icon-message-solid">
-                    <span v-if="numberOfRequest>0&&numberOfRequest<99" style="position: absolute;right: -5px;top: -5px;font-size: 3px;color: white;background-color: red;width: 16px;height: 16px;line-height: 16px;text-align: center;border-radius: 8px">{{numberOfRequest}}</span>
+                    <span v-if="numberOfRequest>0&&numberOfRequest<99" style="position: absolute;right: -5px;top: -5px;font-size: 3px;color: white;background-color: #ff0000;width: 16px;height: 16px;line-height: 16px;text-align: center;border-radius: 8px">{{numberOfRequest}}</span>
                     <span v-else-if="numberOfRequest>=99"  style="position: absolute;right: -5px;top: -5px;font-size: 3px;color: white;background-color: red;width: 16px;height: 16px;line-height: 16px;text-align: center;border-radius: 8px">99...</span>
                 </i>
                 <i style="display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
