@@ -14,7 +14,7 @@
 <!--            数据具体展示-->
             <div class="detailedData">
                 <!--            用户数-->
-                <div class="demoOfDivInDetailedData" style="background-color: #E1F3D8">
+                <div class="dataBlocks" style="background-color: #E1F3D8">
                     <div style="flex: 1;width: 100%;height: 100%;display: flex;align-items: end;padding-left: 10px;font-weight: bold">
                             <span>已注册用户</span>
                     </div>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <!--            投票项目数-->
-                <div class="demoOfDivInDetailedData" style="background-color: #FAECD8">
+                <div class="dataBlocks" style="background-color: #FAECD8">
                     <div style="flex: 1;width: 100%;height: 100%;display: flex;align-items: end;padding-left: 10px;font-weight: bold">
                             <span>已发布投票</span>
                     </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <!--            参与人数-->
-                <div class="demoOfDivInDetailedData" style="background-color:#FDE2E2">
+                <div class="dataBlocks" style="background-color:#FDE2E2">
                     <div style="flex: 1;width: 100%;height: 100%;display: flex;align-items: end;padding-left: 10px;font-weight: bold">
                         <span>已参与投票</span>
                     </div>
@@ -42,7 +42,7 @@
                 </div>
 
                 <!--            团队人数-->
-                <div class="demoOfDivInDetailedData" style="background-color:#E5EBFD">
+                <div class="dataBlocks" style="background-color:#E5EBFD">
                     <div style="flex: 1;width: 100%;height: 100%;display: flex;align-items: end;padding-left: 10px;font-weight: bold">
                         <span>团队人数</span>
                     </div>
@@ -52,47 +52,29 @@
                 </div>
             </div>
         </div>
+
     <div class="visualizationOfHome">
        <div class="viewOfvoteData">
-
-        <div class="mainBodyOfvoteCenter">
+        <div class="voteChannel">
           <transition-group name="list-complete" tag="p" appear>
 
             <div v-show="flagOftext" class="textArea" :key="1">
-              <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closetextArea"></i>
+
               <div class="headOfvoteData">
                 <span >投票频道1</span>
               </div>
-              <div class="mainBodyOfvoteData">
-                <!--                    现有投票-->
-                <div v-show="!flagOfChangeUserData" class="defaultInformation" >
+              <div class="voteChannel">
+                <!--    现有投票-->
+                <div class="voteNowHave" >
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
                     <span>666</span>
                   </div>
-
                 </div>
               </div>
             </div>
-
-            <div v-show="flagOfvoteData" class="voteDataArea" :key="2">
-              <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closevoteDataArea"></i>
-              <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">暂时没用</span>
-            </div>
-
-
-            <div v-show="flagOfdealtArea" class="dealtArea" :key="3">
-              <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closedealtArea"></i>
-              <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">暂时没用</span>
-            </div>
-
-
-            <div v-show="flagOfnotice" class="noticeArea" :key="4">
-              <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closenoticeArea"></i>
-              <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">暂时没用</span>
-
-            </div>
           </transition-group>
+
         </div>
 
 
@@ -112,16 +94,12 @@ export default {
       Num:'',
       Item:'',
       Voted:'',
-      numberOfRequest:0,
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
-      flagOfdealtArea:true,
-      flagOfnotice:true,
       localTionObj:{},
       sentence:"",
       user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
-      flagOfChangeUserData:false,
       dialogVisible: false,
       form:{},
     }
@@ -130,24 +108,8 @@ export default {
     displayNone(){
       this.$bus.$emit('voteCenterChange',this.flagOfvoteCenter)
     },
-    closetextArea(){
-      this.flagOftext = !this.flagOftext
-    },
-    closevoteDataArea(){
-      this.flagOfvoteData = !this.flagOfvoteData
-    },
-    closedealtArea(){
-      this.flagOfdealtArea = !this.flagOfdealtArea
-    },
-    closenoticeArea(){
-      this.flagOfnotice = !this.flagOfnotice
-    },
 
-    loadSentence(){
-      this.request.get("https://v1.hitokoto.cn?c=j").then(res=>{
-        this.sentence = res.hitokoto
-      })
-    },
+
 
     loadNum(){
       this.request.get("/user/count").then(res=>{
@@ -168,9 +130,7 @@ export default {
     },
   },
   created() {
-    this.loadSentence()
-    this.loadNumberOfRequest(JSON.parse(localStorage.getItem("user")).id),
-    this.loadInforOfRequest(JSON.parse(localStorage.getItem("user")).id),
+    this.loadSentence(),
     this.loadItem(),
     this.loadNum(),
     this.loadVoted()
@@ -180,6 +140,16 @@ export default {
 </script>
 
 <style scoped>
+
+.mainBodyOfHome{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
   .viewOfvoteData{
     width: 100%;
@@ -191,18 +161,24 @@ export default {
     right: 0px;
   }
 
-  .mainBodyOfvoteCenter{
+  .voteChannel{
     flex: 14;
     width: 100%;
     overflow-y: auto;
     position: relative;
   }
-  .mainBodyOfvoteCenter div{
+  .voteChannel div{
     border-radius: 15px;
     margin-top: 20px;
+    transition: all 0.5s;
   }
 
-  .textArea{
+  .voteChannel div:hover{
+    transform: scale(1.01,1.01);
+  }
+
+
+ .textArea{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -220,52 +196,6 @@ export default {
   margin-top: 0px;
   }
 
-  .voteDataArea{
-  width: 95%;
-  height: 100px;
-  background-color: white;
-  margin-left: 30px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
-  }
-
-  .dealtArea{
-  width: 95%;
-  height: 100px;
-  margin-left: 30px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow-y: auto;
-  background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-  align-items: center;
-  }
-  .noticeArea{
-    width: 95%;
-    height: 100px;
-    margin-left: 30px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow-y: auto;
-    background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-    align-items: center;
-  }
-
-  .noticeArea div{
-    margin-top: 0px;
-  }
-
-
-  .IconArea i:hover{
-    color: #257B5E;
-    cursor: pointer;
-  }
   .liList li{
     text-align: center;
   }
@@ -273,39 +203,32 @@ export default {
     color: #257B5E;
     background-color: rgba(37,123,94,0.1);
   }
-   .mainBodyOfvoteCenter div {
-    transition: all 0.5s;
-  }
 
-  .mainBodyOfvoteCenter div:hover{
-    transform: scale(1.01,1.01);
-  }
- .close:hover{
-    cursor: pointer;
-    color: #2b542c;
-  }
 
-  .defaultInformation div,.changeDataOfUser div{
+  .voteNowHave{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
     flex: 1;
     height: 100%;
     font-size: 13px;
     font-weight: bold;
     color: #464646;
     width: 100%;
-    padding: 0 15px;
-
+    padding: 0 15px
   }
 
-    .mainBodyOfHome{
-        display: flex;
-        width: 100%;
-        height: 100%;
-        background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+  .voteNowHave:hover{
+    cursor: pointer;
+    background-color: rgba(231,234,237,0.7);
+    transform: scale(0,0);
+    width: 99%;
+    border-radius: 10px;
 
+  }
     .dataDisplayOfHome{
         flex: 2;
         height: 100%;
@@ -329,6 +252,7 @@ export default {
         display: flex;
         align-items: end;
     }
+
     .detailedData{
         flex: 4;
         width: 100%;
@@ -338,7 +262,7 @@ export default {
         justify-content: center;
         gap: 20px;
     }
-    .demoOfDivInDetailedData{
+    .dataBlocks{
         flex: 1;
         width: 100%;
         height: 80%;
@@ -349,18 +273,8 @@ export default {
         flex-direction: column;
         overflow: hidden;
     }
+    
 
-.mainBodyOfvoteCenter div {
-  transition: all 0.5s;
-}
-
-.mainBodyOfvoteCenter div:hover{
-  transform: scale(1.01,1.01);
-}
-.close:hover{
-  cursor: pointer;
-  color: #2b542c;
-}
 .headOfvoteData{
   height: 100%;
   width: 100%;
@@ -372,42 +286,16 @@ export default {
   font-size: 16px;
   justify-content: center;
 }
-.mainBodyOfvoteData{
+
+.voteChannel{
   flex: 6;
   width: 100%;
-
-
-}
-.defaultInformation{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-
 }
 
-.defaultInformation:hover{
-  cursor: pointer;
-  background-color: rgba(231,234,237,0.7);
-  transform: scale(0,0);
-  width: 99%;
-  border-radius: 10px;
 
-}
-.defaultInformation div,.changeDataOfUser div{
-  flex: 1;
-  height: 100%;
-  font-size: 13px;
-  font-weight: bold;
-  color: #464646;
-  width: 100%;
-  padding: 0 15px;
-
-}
   /deep/ .el-upload{
     width: 100%;
     height: 100%;
   }
+
 </style>
