@@ -155,7 +155,7 @@ export default {
         }
       });
 
-      this.request.post('/vote/mine/', this.dynamicValidateForm).then(res=>{
+      this.request.post('/vote/add/', this.dynamicValidateForm).then(res=>{
         if(res.code=="1"){
           this.$message.success("提交成功！")
         }
