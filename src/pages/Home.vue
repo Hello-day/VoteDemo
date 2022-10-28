@@ -216,17 +216,6 @@ export default {
     background-color: rgba(37,123,94,0.1);
   }
 
-.voteDataArea{
-  width: 95%;
-  height: 100px;
-  background-color: white;
-  margin-left: 30px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
-}
   .voteNowHave{
     display: flex;
     flex-direction: column;

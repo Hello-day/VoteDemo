@@ -140,7 +140,6 @@ export default {
   margin-left: 30px;
   position: relative;
   background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-  align-items: center;
 
 }
 
@@ -166,11 +165,9 @@ export default {
   height: 100%;
   width: 100%;
   flex: 1;
-  height: 100%;
   font-size: 13px;
   font-weight: bold;
   color: #464646;
-  width: 100%;
   padding: 0 15px
 }
 
@@ -205,28 +202,6 @@ export default {
   display: flex;
   align-items: center;
 }
-
-.detailedData{
-  flex: 4;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-.dataBlocks{
-  flex: 1;
-  width: 100%;
-  height: 80%;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 
 .headOfvoteData{
   height: 100%;
