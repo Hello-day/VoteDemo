@@ -74,7 +74,6 @@
               </div>
             </div>
           </transition-group>
-
         </div>
 
        </div>
@@ -100,11 +99,6 @@ export default {
       flagOftext:true,
       flagOfvoteData:true,
       flagOfvoteContent:true,
-      localTionObj:{},
-      sentence:"",
-      user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
-      dialogVisible: false,
-      form:{},
     }
   },
   methods:{
@@ -143,10 +137,10 @@ export default {
     },
   },
   created() {
-    this.loadSentence(),
+
     this.loadItem(),
     this.loadNum(),
-    this.loadVoted()
+    this.loadVoted(),
     this.load()
   }
 }

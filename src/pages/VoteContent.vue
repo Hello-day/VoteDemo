@@ -25,7 +25,7 @@
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
-                <div class="voteNowHave"  @click="voteContentApper">
+                <div id= "box" class="voteNowHave"  @click="voteView(box)">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
                     <span>666</span>
@@ -57,11 +57,7 @@ export default {
       flagOftext:true,
       flagOfvoteData:true,
       flagOfvoteContent:true,
-      localTionObj:{},
-      sentence:"",
-      user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
-      dialogVisible: false,
-      form:{},
+
     }
   },
   methods:{
@@ -70,9 +66,10 @@ export default {
     },
 
 
-    voteContentApper(){
-
+    voteView(box){
+          box.style.width =300+"px"
     },
+
 
   },
   created() {
@@ -126,7 +123,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 95%;
-  height: 100px;
+  height: 200px;
   background-color: white;
   margin-left: 30px;
   position: relative;
@@ -171,8 +168,8 @@ export default {
   transform: scale(0,0);
   width: 99%;
   border-radius: 10px;
-
 }
+
 .dataDisplayOfHome{
   flex: 2;
   height: 100%;
