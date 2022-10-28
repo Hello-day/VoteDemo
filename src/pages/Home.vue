@@ -59,14 +59,13 @@
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
           <transition-group name="list-complete" tag="p" appear v-for="i in count">
-            <div v-show="flagOftext" class="textArea" :key="1">
-
+            <div v-show="flagOftext" class="textArea" :key=i >
               <div class="headOfvoteData">
-                <span >投票频道{{i}}</span>
+                <span >投票频道</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
-                <div class="voteNowHave"  @click="voteContentApper">
+                <div class="voteNowHave"  @click="voteContentApper(i)">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
                     <span>666</span>
@@ -96,6 +95,7 @@ export default {
       Num:'',
       Item:'',
       Voted:'',
+      ChannelId:'',
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
@@ -108,13 +108,20 @@ export default {
     }
   },
   methods:{
+
     load () {
-      this.count += 2
+      this.count += 2 //一次生成6个
     },
 
 
-    voteContentApper(){
-      this.$router.push({path:'/manage/VoteContent',query: {id:"1"}})
+    voteContentApper(i){
+      this.$router.push({
+        name:"VoteContent",
+        query:{
+          id:i
+        }
+      })
+
     },
 
 

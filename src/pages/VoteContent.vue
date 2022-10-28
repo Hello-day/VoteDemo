@@ -73,7 +73,7 @@ export default {
 
 
     voteContentApper(){
-      this.$router.push({path:'/manage/VoteContent',query: {id:"1"}})
+
     },
 
   },
