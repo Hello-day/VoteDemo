@@ -36,7 +36,7 @@
                     <el-form-item  label="投票频道" >
                       <el-select v-model="dynamicValidateForm.selectChannel" placeholder="请选择投票频道">
                         <!--eslint-disable-next-line-->
-                        <el-option v-for="i in channel" :label="channel.name" :value="i"></el-option>
+                        <el-option v-for="i in channel" :label="i.name" :value="i.name"></el-option>
                       </el-select>
                     </el-form-item>
 
@@ -74,11 +74,10 @@
           </div>
 
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" >
-            <div v-show="flagOftext" class="textArea" :key="1">
-
+          <transition-group name="list-complete" tag="p" appear v-for="i in myVote">
+            <div v-show="flagOftext" class="textArea" :key="i">
               <div class="headOfvoteData">
-                <span >投票内容{{i}}</span>
+                <span >{{i.name}}</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
@@ -109,8 +108,8 @@ export default {
   data(){
     return {
       channel:[],
-      //count:0,
-      ChannelId: this.$route.query.id,
+      myVote:[],
+      loginUser: this.$route.query.username,
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
@@ -142,6 +141,12 @@ export default {
         }
 
         // console.log(this.channel)
+      })
+    },
+
+    loadMyVote() {
+      this.request.get("/vote/mine",this.loginUser).then(res => {
+        this.myVote = res.data
       })
     },
 
@@ -197,7 +202,7 @@ export default {
   },
   created() {
     this.list()
-  //  this.load()
+    this.loadMyVote()
   }
 }
 

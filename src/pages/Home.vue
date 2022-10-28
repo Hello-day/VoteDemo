@@ -120,7 +120,6 @@ export default {
     //   this.count += 2 //一次生成6个
     // },
 
-
     voteContentApper(i){
       this.$router.push({
         name:"VoteContent",
@@ -129,7 +128,6 @@ export default {
         }
       })
     },
-
 
     loadNum(){
       this.request.get("/user/count").then(res=>{

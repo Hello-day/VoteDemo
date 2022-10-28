@@ -163,7 +163,7 @@ export default {
   data(){
     return{
 
-      loginUser:{
+        loginUser:{
         name:"",
         password:""
       },
@@ -211,7 +211,12 @@ export default {
         if(res.code=="1"){
           localStorage.setItem("user",JSON.stringify(res.data))
           this.$message.success("登陆成功！")
-          this.$router.push("/manage")
+          this.$router.push({
+            name:"Manage",
+            query:{
+              username:this.loginUser.name
+            }
+          })
         }
         else{
           this.$message.error("用户名或密码错误！")
