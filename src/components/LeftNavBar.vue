@@ -21,9 +21,6 @@
                  <router-link :to="{name:'Home'}" active-class="active" >主页</router-link>
                  <router-link :to="{name:'Create'}" active-class="active" >我发起的投票</router-link>
                  <router-link :to="{name:'Participate'}" active-class="active" >我参与的投票</router-link>
-               <!-- <router-link :to="{name:'Weather'}" active-class="active" >天气</router-link>
-               <router-link to="#" active-class="active" >其它</router-link> -->
-
            </div>
              </transition>
              <transition
@@ -43,12 +40,7 @@
                     <el-tooltip class="item" effect="dark" content="我参与的投票" placement="right">
                    <router-link style="font-size: 20px" :to="{name:'Participate'}"  active-class="active2"><li class="el-icon-s-custom"></li></router-link>
                    </el-tooltip>
-                 <!-- <el-tooltip class="item" effect="dark" content=" " placement="right">
-                     <router-link style="font-size: 20px" :to="{name:'Weather'}" active-class="active2"><li class="el-icon-coffee-cup"></li></router-link>
-                      </el-tooltip>
-                     <el-tooltip class="item" effect="dark" content=" " placement="right">
-                     <router-link style="font-size: 20px" to="#" active-class="active2"><li class="el-icon-sunrise，sunny"><li class="el-icon-coffee-cup"></li></router-link>
-                     </el-tooltip> -->
+
                </div>
                </transition>
            </div>
@@ -78,7 +70,6 @@
                 this.flagOfShow= !this.flagOfShow
             },
             personalCenterApper(){
-                // this.flagOfPersonalCenter = !this.flagOfPersonalCenter
                 this.$bus.$emit("personalCenterChange",this.flagOfPersonalCenter)
             }
         },

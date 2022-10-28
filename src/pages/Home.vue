@@ -66,7 +66,7 @@
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
-                <div class="voteNowHave" >
+                <div class="voteNowHave"  @click="voteContentApper">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
                     <span>666</span>
@@ -75,32 +75,10 @@
               </div>
             </div>
           </transition-group>
-
-          <transition-group name="list-complete" tag="p" appear>
-            <div v-show="flagOftext" class="textArea" :key="1">
-
-              <div class="headOfvoteData">
-                <span >投票频道1</span>
-              </div>
-              <div class="voteChannel">
-                <!--    现有投票-->
-                <div class="voteNowHave" >
-                  <div>
-                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </transition-group>
-
-
 
         </div>
 
        </div>
-
-
 
     </div>
     </div>
@@ -121,6 +99,7 @@ export default {
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
+      flagOfvoteContent:true,
       localTionObj:{},
       sentence:"",
       user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
@@ -133,10 +112,10 @@ export default {
       this.count += 2
     },
 
-    displayNone(){
-      this.$bus.$emit('voteCenterChange',this.flagOfvoteCenter)
-    },
 
+    voteContentApper(){
+      this.$router.push({path:'/manage/VoteContent',query: {id:"1"}})
+    },
 
 
     loadNum(){

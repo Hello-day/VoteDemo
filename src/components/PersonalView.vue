@@ -210,8 +210,6 @@ line-height: 30px" class="el-icon-remove-outline" @click="displayNone"></i>
         },
         created() {
             this.loadSentence()
-            this.loadNumberOfRequest(JSON.parse(localStorage.getItem("user")).id)
-            this.loadInforOfRequest(JSON.parse(localStorage.getItem("user")).id)
         }
     }
 </script>
