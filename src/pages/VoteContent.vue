@@ -5,7 +5,7 @@
       <!--          标题  -->
       <div class="headOfDataDisplay">
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                投票频道{{ ChannelId }}
+                投票频道{{ Channel.name }}
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -17,18 +17,18 @@
       <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in count">
+          <transition-group name="list-complete" tag="p" appear v-for="i in vote">
             <div v-show="flagOftext" class="textArea" :key="1">
 
               <div class="headOfvoteData">
-                <span >投票内容{{i}}</span>
+                <span >{{i.name}}</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
                 <div id= "box" class="voteNowHave"  @click="voteView(box)">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
+                    <span>{{i.cnt}}</span>
                   </div>
                 </div>
               </div>
@@ -51,8 +51,9 @@ export default {
   name: "VoteContent",
   data(){
     return {
+      vote:[],
       count:0,
-      ChannelId: this.$route.query.id,
+      Channel: this.$route.query.id,
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
@@ -61,9 +62,19 @@ export default {
     }
   },
   methods:{
-    load () {
-      this.count += 2
+    
+    list(){
+      this.request.get("/vote/list/"+this.Channel.id).then(res=>{
+        this.vote = res.data
+        console.log(this.vote)
+        console.log(this.ChannelId)
+      })
+      
     },
+
+    // load () {
+    //   this.count += 2
+    // },
 
 
     voteView(box){
@@ -73,7 +84,8 @@ export default {
 
   },
   created() {
-    this.load()
+    // this.load()
+    this.list()
   }
 }
 
@@ -234,7 +246,7 @@ export default {
 }
 
 
-/deep/ .el-upload{
+.el-upload{
   width: 100%;
   height: 100%;
 }

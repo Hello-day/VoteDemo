@@ -58,17 +58,17 @@
        <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in count">
+          <transition-group name="list-complete" tag="p" appear v-for="i in channel">
             <div v-show="flagOftext" class="textArea" :key=i >
               <div class="headOfvoteData">
-                <span >投票频道{{i}}</span>
+                <span >{{i.name}}</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
                 <div class="voteNowHave"  @click="voteContentApper(i)">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
+                    <span>{{i.cnt}}</span>
                   </div>
                 </div>
               </div>
@@ -90,6 +90,7 @@ export default {
   name: "Home",
   data(){
     return {
+      channel:[],
       count:0,
       Num:'',
       Item:'',
@@ -103,9 +104,21 @@ export default {
   },
   methods:{
 
-    load () {
-      this.count += 2 //一次生成6个
+    list(){
+      this.request.get("/channel/list").then(res=>{
+        if(res.code == 1){
+          this.channel=res.data
+        }else{
+          prompt(res.msg)
+        }
+          
+        // console.log(this.channel)
+      })
     },
+
+    // load () {
+    //   this.count += 2 //一次生成6个
+    // },
 
 
     voteContentApper(i){
@@ -121,27 +134,18 @@ export default {
     loadNum(){
       this.request.get("/user/count").then(res=>{
         this.Num = res.data.cnt
-      })
-    },
-
-    loadItem(){
-      this.request.get("/user/count").then(res=>{
         this.Item = res.data.numOfVote
-      })
-    },
-
-    loadVoted(){
-      this.request.get("/user/count").then(res=>{
         this.Voted = res.data.numOfPeople
       })
     },
-  },
-  created() {
 
-    this.loadItem(),
-    this.loadNum(),
-    this.loadVoted(),
-    this.load()
+  },
+
+  created() {
+    this.list(),
+    
+    this.loadNum()
+    
   }
 }
 
@@ -311,7 +315,7 @@ export default {
 }
 
 
-  /deep/ .el-upload{
+.el-upload{
     width: 100%;
     height: 100%;
   }
