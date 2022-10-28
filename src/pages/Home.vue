@@ -61,7 +61,7 @@
           <transition-group name="list-complete" tag="p" appear v-for="i in count">
             <div v-show="flagOftext" class="textArea" :key=i >
               <div class="headOfvoteData">
-                <span >投票频道</span>
+                <span >投票频道{{i}}</span>
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
@@ -121,7 +121,6 @@ export default {
           id:i
         }
       })
-
     },
 
 

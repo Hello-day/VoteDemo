@@ -5,7 +5,7 @@
       <!--          标题  -->
       <div class="headOfDataDisplay">
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                投票频道1
+                投票频道{{ ChannelId }}
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -52,9 +52,7 @@ export default {
   data(){
     return {
       count:0,
-      Num:'',
-      Item:'',
-      Voted:'',
+      ChannelId: this.$route.query.id,
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
