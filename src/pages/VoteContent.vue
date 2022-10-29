@@ -19,7 +19,7 @@
       <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in 2">
+          <transition-group name="list-complete" tag="p" appear v-for="i in vote">
             <div v-show="flagOftext" class="textArea" :key="1">
 
               <div class="headOfvoteData">
@@ -55,7 +55,7 @@ export default {
     return {
       vote:[],
       count:0,
-      Channel: this.$route.query.id,
+      Channel: this.$route.query,
       flagOfvoteCenter:true,
       flagOftext:true,
       flagOfvoteData:true,
@@ -69,7 +69,7 @@ export default {
     },
 
     votePageApper(i){
-      this.$axios.get("/?/?").then(res=>{  //查询是否投过票，没投票则进入投票页面
+      this.request.get("/?/?").then(res=>{  //查询是否投过票，没投票则进入投票页面
             if(res.code == 1){
               this.$router.push({
                 name:"VotePage",

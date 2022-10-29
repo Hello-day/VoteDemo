@@ -58,7 +58,7 @@
        <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in 2">
+          <transition-group name="list-complete" tag="p" appear v-for="i in channel">
             <div v-show="flagOftext" class="textArea" :key=i >
               <div class="headOfvoteData">
                 <span >{{i.name}}</span>
@@ -124,7 +124,7 @@ export default {
       this.$router.push({
         name:"VoteContent",
         query:{
-          channel:i
+          id:i.id
         }
       })
     },
