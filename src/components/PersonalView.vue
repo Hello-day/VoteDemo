@@ -148,7 +148,6 @@
         name: "PersonalView",
         data(){
             return{
-                numberOfRequest:0,
                 flagOfPersonalCenter:false,
                 flagOftext:true,
                 flagOfPersonalData:true,
@@ -158,10 +157,7 @@
                 sentence:"",
                 user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
                 flagOfChangeUserData:false,
-            // 控制弹窗
-                dialogVisible: false,
-            // 弹窗中的用户信息表
-                form:{},
+
             }
         },
         methods:{

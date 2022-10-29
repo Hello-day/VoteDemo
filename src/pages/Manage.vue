@@ -39,7 +39,7 @@
         components:{LeftNavBar,PersonalView},
         data(){
             return{
-                personalViewFlag:true
+                personalViewFlag:false
             }
           },
         mounted() {

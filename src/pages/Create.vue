@@ -77,6 +77,18 @@
           <transition-group name="list-complete" tag="p" appear v-for="i in myVote">
             <div v-show="flagOftext" class="textArea" :key="i">
               <div class="headOfvoteData">
+                <el-popover
+                    placement="bottom"
+                    width="160"
+                    v-model="visible" >
+                  <p>要删除此投票吗？</p>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="visible = false">取消</el-button>  <!--点击取消应该让这个气泡消失，我还没写-->
+                    <el-button type="primary" size="mini" @click=closetextArea(i)>确定</el-button>
+                  </div>
+                  <el-button slot="reference" style="position: absolute;right: 15px;top: 10px;">删除</el-button>
+                </el-popover>
+
                 <span >{{i.name}}</span>
               </div>
               <div class="voteChannel">
@@ -90,6 +102,7 @@
               </div>
             </div>
           </transition-group>
+
         </div>
 
 
@@ -108,7 +121,7 @@ export default {
   data(){
     return {
       channel:[],
-      myVote:[],
+      myVote:[1,1,1],  //储存我创建的投票，里面数据删掉
       user: localStorage.getItem("user"),
       flagOfvoteCenter:false,
       flagOftext:true,
@@ -132,6 +145,23 @@ export default {
     }
   },
   methods:{
+
+    closetextArea(i){   //删除投票
+
+      this.myVote.splice(i-1, 1);  //从数组中删除，使这项不显示，应该放到删除成功下面，此处为测试用
+
+      this.request.post('/？/？', this.myVote.id).then(res=>{  //路由没配
+        if(res.code=="1"){
+          this.$message.success("删除成功！")
+          //this.myVote.splice(i-1, 1);
+        }
+        else{
+          this.$message.error("删除失败！")
+        }
+      })
+
+    },
+
     list(){
       this.request.get("/channel/list").then(res=>{
         if(res.code == 1){
@@ -193,9 +223,7 @@ export default {
       })
 
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
+
     removeOption(item) {
       var index = this.dynamicValidateForm.options.indexOf(item)
       if (index !== -1) {

@@ -7,9 +7,8 @@
         <el-page-header @back="goBack" content="">
         </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                投票频道
+                {{ voteItem.name }}
                 </span>
-
       </div>
       <!--            数据具体展示-->
 
@@ -19,8 +18,7 @@
 
       <div class="viewOfvoteData">
         <div class="voteChannel"  >
-          <div v-show="flagOfstartCreate" class="voteArea" :key="100">
-
+          <div class="voteArea" :key="100">
             <div class="headOfvoteData">
               <span >当前投票结果</span>
             </div>
@@ -31,16 +29,12 @@
                   <div slot="header" class="clearfix">
                     <span>条形图</span>
                   </div>
-                  <div v-for="o in 9" :key="o" class="text item">
-                    {{'内容 ' + o }}
-                    <el-progress :text-inside="true" :stroke-width="26" :percentage="70"></el-progress>
-
+                  <div v-for="o in voteOpt" :key="o" class="text item">
+                    {{o.optionName}}
+                    <el-progress :text-inside="true" :stroke-width="26" :percentage="optCnt"></el-progress>
                   </div>
+
                 </el-card>
-
-                  <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" label-width="100px">
-
-                  </el-form>
 
               </div>
             </div>
@@ -65,101 +59,34 @@ export default {
   name: "VoteContent",
   data(){
     return {
+      voteOpt:[],   //当前投票项目的选项
+      voteItem: this.$route.query,   //当前投票项目
+      optCnt: '',//暂存每个选项得票占比
       channel:[],
-
       myVote:[],
-
-      loginUser: this.$route.query.username,
-
-      flagOfstartCreate:true,
-   
-      dynamicValidateForm: {
-
-        options: [{
-          value: ''
-        }],
-        option1: '',
-        
-        voteName: '',
-        selectChannel: '',
-        desc: ''
-      }
-
     }
   },
 
   methods:{
-    goBack() {
-      this.$router.go(-1)
-    },
-
-    list(){
-      this.request.get("/channel/list").then(res=>{
+    loadOpt(){
+      this.request.get("/option/",this.voteItem.id).then(res=>{   //获取当前投票内的选项
         if(res.code == 1){
-          this.channel=res.data
+          this.voteOpt=res.data
         }else{
           prompt(res.msg)
         }
 
-        // console.log(this.channel)
       })
     },
 
-    loadMyVote() {
-      this.request.get("/vote/mine",this.loginUser).then(res => {
-        this.myVote = res.data
-      })
+    goBack() {
+      this.$router.go(-1)
     },
-
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        }else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-
-      this.request.post('/vote/add/', this.dynamicValidateForm).then(res=>{
-        if(res.code=="1"){
-          this.$message.success("提交成功！")
-        }
-        else{
-          this.$message.error("提交失败！")
-        }
-      })
-    },
-
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-
-    removeOption(item) {
-      var index = this.dynamicValidateForm.options.indexOf(item)
-      if (index !== -1) {
-        this.dynamicValidateForm.options.splice(index, 1)
-      }
-    },
-
-    addOption() {
-      this.dynamicValidateForm.options.push({
-        value: '',
-        key: Date.now()
-      });
-    },
-
-
-    //load () {
-    //  this.count += 2
-    //},
-
 
 
   },
   created() {
-    this.list()
-    this.loadMyVote()
+
   }
 }
 
