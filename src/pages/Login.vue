@@ -28,14 +28,14 @@
             </div>
             <div style="flex: 1;justify-content: center;display: flex;align-items: center">
               <el-input placeholder="密码"  v-model="loginUser.password" style="width: 165px" show-password></el-input>
-            </div>
+            </div>        
           </div>
         </transition>
         <transition
             name="animate__animated animate__bounce"
             enter-active-class="animate__fadeInUp"
             leave-active-class="animate__zoomOut"
-            appear
+            appear 
         >
           <!-- 登录注册按钮 -->
           <div v-show="isShow" class="btnArea">
@@ -163,7 +163,7 @@ export default {
   data(){
     return{
 
-        loginUser:{
+      loginUser:{
         name:"",
         password:""
       },
