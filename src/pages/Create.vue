@@ -84,7 +84,7 @@
                 <div class="voteNowHave">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
+                    <span>{{i.cnt}}</span>
                   </div>
                 </div>
               </div>
