@@ -44,6 +44,16 @@ export default new VueRouter({
                     name:'VoteContent',
                     component: ()=> import("../pages/VoteContent"),
                 },
+                {
+                    path:'VotePage',
+                    name:'VotePage',
+                    component: ()=> import("../pages/VotePage"),
+                },
+                {
+                    path:'VoteResult',
+                    name:'VoteResult',
+                    component: ()=> import("../pages/VoteResult"),
+                },
             ]
         }
 

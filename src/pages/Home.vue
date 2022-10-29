@@ -58,7 +58,7 @@
        <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in channel">
+          <transition-group name="list-complete" tag="p" appear v-for="i in 2">
             <div v-show="flagOftext" class="textArea" :key=i >
               <div class="headOfvoteData">
                 <span >{{i.name}}</span>
@@ -124,7 +124,7 @@ export default {
       this.$router.push({
         name:"VoteContent",
         query:{
-          id:i
+          channel:i
         }
       })
     },
@@ -198,7 +198,6 @@ export default {
   margin-left: 30px;
   position: relative;
   background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-  align-items: center;
 
   }
 
@@ -222,11 +221,9 @@ export default {
     height: 100%;
     width: 100%;
     flex: 1;
-    height: 100%;
     font-size: 13px;
     font-weight: bold;
     color: #464646;
-    width: 100%;
     padding: 0 15px
   }
 
@@ -301,10 +298,5 @@ export default {
   width: 100%;
 }
 
-
-.el-upload{
-    width: 100%;
-    height: 100%;
-  }
 
 </style>

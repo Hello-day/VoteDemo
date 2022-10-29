@@ -7,7 +7,7 @@
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
                 我发起的投票
                 </span>
-                <span class= "IconArea" style="flex: 2;font-size: 18px;font-weight: bold;color: #4E5C72;justify-content: end;display: flex">
+        <span class= "IconArea" style="flex: 2;font-size: 18px;font-weight: bold;color: #4E5C72;justify-content: end;display: flex">
                    <el-button round icon="el-icon-edit" size="medium" @click="startCreate">新建投票</el-button>
                 </span>
       </div>
@@ -28,46 +28,46 @@
               <!--    现有投票-->
               <div  class="voteEdit" >
 
-                  <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" label-width="100px">
-                    <el-form-item label="投票名称">
-                      <el-input v-model="dynamicValidateForm.voteName"></el-input>
-                    </el-form-item>
+                <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" label-width="100px">
+                  <el-form-item label="投票名称">
+                    <el-input v-model="dynamicValidateForm.name"></el-input>
+                  </el-form-item>
 
-                    <el-form-item  label="投票频道" >
-                      <el-select v-model="dynamicValidateForm.selectChannel" placeholder="请选择投票频道">
-                        <!--eslint-disable-next-line-->
-                        <el-option v-for="i in channel" :label="i.name" :value="i.name"></el-option>
-                      </el-select>
-                    </el-form-item>
+                  <el-form-item  label="投票频道" >
+                    <el-select v-model="dynamicValidateForm.channelName" placeholder="请选择投票频道">
+                      <!--eslint-disable-next-line-->
+                      <el-option v-for="i in channel" :label="i.name" :value="i.name"></el-option>
+                    </el-select>
+                  </el-form-item>
 
-                        <el-form-item prop="option1" label="选项1" :rules="{ required: true, message: '选项不能为空', trigger: 'blur' }">
-                          <el-input v-model="dynamicValidateForm.option1"></el-input>
-                        </el-form-item>
+                  <el-form-item prop="option1" label="选项1" :rules="{ required: true, message: '选项不能为空', trigger: 'blur' }">
+                    <el-input v-model="dynamicValidateForm.option1"></el-input>
+                  </el-form-item>
 
-                        <el-form-item
-                            v-for="(option, index) in dynamicValidateForm.options"
-                            :label="'选项' + (index+2)"
-                            :key="option.key"
-                            :prop="'options.' + (index+2) + '.value'"
-                            :rules="{required: true, message: '选项不能为空', trigger: 'blur' }">
-                          <el-input v-model="option.value"></el-input><el-button @click.prevent="removeOption(option)">删除</el-button>
+                  <el-form-item
+                      v-for="(option, index) in dynamicValidateForm.options"
+                      :label="'选项' + (index+2)"
+                      :key="option.key"
+                      :prop="'options.' + (index+2) + '.optionName'"
+                      :rules="{required: true, message: '选项不能为空', trigger: 'blur' }">
+                    <el-input v-model="option.optionName"></el-input><el-button @click.prevent="removeOption(option)">删除</el-button>
 
-                        </el-form-item>
+                  </el-form-item>
 
-                        <el-form-item>
-                          <el-button @click="addOption">新增选项</el-button>
-                        </el-form-item>
+                  <el-form-item>
+                    <el-button @click="addOption">新增选项</el-button>
+                  </el-form-item>
 
-                    <el-form-item label="详细描述">
-                      <el-input type="textarea" v-model="dynamicValidateForm.desc"></el-input>
-                    </el-form-item>
+                  <el-form-item label="详细描述">
+                    <el-input type="textarea" v-model="dynamicValidateForm.description"></el-input>
+                  </el-form-item>
 
-                    <el-form-item>
-                      <el-button type="primary" @click="submitForm('dynamicValidateForm')">立即创建</el-button>
-                      <el-button>取消</el-button>
-                      </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="submitForm()">立即创建</el-button>
+                    <el-button>取消</el-button>
+                  </el-form-item>
 
-                  </el-form>
+                </el-form>
 
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="voteNowHave">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
+                    <span>{{i.cnt}}</span>
                   </div>
                 </div>
               </div>
@@ -109,28 +109,28 @@ export default {
     return {
       channel:[],
       myVote:[],
-      loginUser: this.$route.query.username,
+      user: localStorage.getItem("user"),
       flagOfvoteCenter:false,
       flagOftext:true,
       flagOfvoteData:true,
       flagOfvoteContent:true,
       flagOfstartCreate:false,
-   
-      dynamicValidateForm: {
 
+      dynamicValidateForm: {
         options: [{
-          value: ''
+          voteId:'',
+          optionName: ''
         }],
         option1: '',
-        
-        voteName: '',
-        selectChannel: '',
-        desc: ''
-      }
+
+        name: '',
+        channelName: '',
+        description: ''
+      },
+      vote_Id:''
 
     }
   },
-
   methods:{
     list(){
       this.request.get("/channel/list").then(res=>{
@@ -139,77 +139,92 @@ export default {
         }else{
           prompt(res.msg)
         }
-
         // console.log(this.channel)
       })
     },
-
     loadMyVote() {
-      this.request.get("/vote/mine",this.loginUser).then(res => {
+      this.$axios.get("/vote/mine",this.user.name).then(res => {
         this.myVote = res.data
       })
     },
-
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        }else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-
+    submitForm() {
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     alert('submit!');
+      //   }else {
+      //     console.log('error submit!!');
+      //     return false;
+      //   }
+      //   else{
+      //     this.$message.error("提交失败！")
+      //   }
+      // }),
       this.request.post('/vote/add/', this.dynamicValidateForm).then(res=>{
         if(res.code=="1"){
           this.$message.success("提交成功！")
+          this.vote_Id = res.data
+          console.log(this.vote_Id)
+          this.dynamicValidateForm.options.unshift({
+            voteId:'',
+            optionName: ''
+          })
+          this.dynamicValidateForm.options[0].optionName=this.dynamicValidateForm.option1;
+          for(let i=0;i<this.dynamicValidateForm.options.length;i++){
+            console.log(i+" "+this.vote_Id)
+            this.dynamicValidateForm.options[i].voteId = this.vote_Id
+          }
+          // for(let i in this.dynamicValidateForm.options){
+          //   i.voteId = this.vote_Id
+          // }
+          this.request.post('/option/add', this.dynamicValidateForm.options).then(res=>{
+            if(res.code=="1"){
+              this.$message.success("提交成功！")
+            }
+            else{
+              this.$message.error("提交失败！")
+            }
+          })
+          this.flagOftext = !this.flagOftext,
+              this.flagOfstartCreate = !this.flagOfstartCreate
         }
         else{
           this.$message.error("提交失败！")
         }
       })
-    },
 
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-
     removeOption(item) {
       var index = this.dynamicValidateForm.options.indexOf(item)
       if (index !== -1) {
         this.dynamicValidateForm.options.splice(index, 1)
       }
     },
-
     addOption() {
       this.dynamicValidateForm.options.push({
-        value: '',
-        key: Date.now()
+        voteId:'',
+        optionName: ''
       });
     },
-
-
     //load () {
     //  this.count += 2
     //},
-
     startCreate(){
       this.flagOftext = !this.flagOftext,
-      this.flagOfstartCreate = !this.flagOfstartCreate
+          this.flagOfstartCreate = !this.flagOfstartCreate
+      // this.request.get("/channel/list")
     },
-
-
   },
   created() {
     this.list()
     this.loadMyVote()
   }
 }
-
 </script>
 
 <style scoped>
-
 .mainBodyOfHome{
   display: flex;
   width: 100%;
@@ -285,7 +300,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   height: 100%;
   width: 100%;
   flex: 1;
@@ -383,11 +398,6 @@ export default {
 .voteChannel{
   flex: 6;
   width: 100%;
-}
-
-/deep/ .el-upload{
-  width: 100%;
-  height: 100%;
 }
 
 </style>

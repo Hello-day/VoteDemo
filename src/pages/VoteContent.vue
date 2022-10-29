@@ -4,8 +4,10 @@
     <div class="dataDisplayOfHome">
       <!--          标题  -->
       <div class="headOfDataDisplay">
+        <el-page-header @back="goBack" content="">
+        </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                投票频道{{ Channel.name }}
+                投票频道
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -17,7 +19,7 @@
       <div class="viewOfvoteData">
         <div class="voteChannel" v-infinite-scroll="load" style="overflow:auto">
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in vote">
+          <transition-group name="list-complete" tag="p" appear v-for="i in 2">
             <div v-show="flagOftext" class="textArea" :key="1">
 
               <div class="headOfvoteData">
@@ -25,7 +27,7 @@
               </div>
               <div class="voteChannel">
                 <!--    现有投票-->
-                <div id= "box" class="voteNowHave"  @click="voteView(box)">
+                <div id= "box" class="voteNowHave" @click="votePageApper(i)">
                   <div>
                     现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
                     <span>{{i.cnt}}</span>
@@ -54,7 +56,7 @@ export default {
       vote:[],
       count:0,
       Channel: this.$route.query.id,
-      flagOfvoteCenter:false,
+      flagOfvoteCenter:true,
       flagOftext:true,
       flagOfvoteData:true,
       flagOfvoteContent:true,
@@ -62,9 +64,34 @@ export default {
     }
   },
   methods:{
+    goBack() {
+      this.$router.go(-1)
+    },
+
+    votePageApper(i){
+      this.$axios.get("/?/?").then(res=>{  //查询是否投过票，没投票则进入投票页面
+            if(res.code == 1){
+              this.$router.push({
+                name:"VotePage",
+                query:{
+                  channelId:i
+                }
+              })
+            }else if(res.code == 0){
+              this.$router.push({
+                name:"VoteResult",
+                query:{
+                  channelId:i
+                }
+              })
+            }
+
+
+      })
+    },
     
     list(){
-      this.request.get("/vote/list/"+this.Channel.id).then(res=>{
+      this.$axios.get("/vote/list/"+this.Channel.id).then(res=>{
         this.vote = res.data
         console.log(this.vote)
         console.log(this.ChannelId)
@@ -72,19 +99,9 @@ export default {
       
     },
 
-    // load () {
-    //   this.count += 2
-    // },
-
-
-    voteView(box){
-          box.style.width =300+"px"
-    },
-
-
   },
   created() {
-    // this.load()
+
     this.list()
   }
 }
@@ -92,6 +109,7 @@ export default {
 </script>
 
 <style scoped>
+
 
 .mainBodyOfHome{
   display: flex;
@@ -218,12 +236,6 @@ export default {
 .voteChannel{
   flex: 6;
   width: 100%;
-}
-
-
-.el-upload{
-  width: 100%;
-  height: 100%;
 }
 
 </style>

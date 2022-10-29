@@ -7,20 +7,14 @@ import * as echarts from 'echarts'
 import vueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import router from './router'
-
+import axios from 'axios'
 
 Vue.use(ElementUI,{size:'mini'});
 Vue.config.productionTip = false
 Vue.use(vueResource)
 Vue.use(VueRouter)
+Vue.prototype.$axios = axios
 
-
-
-// const demo = Vue.extend({})
-// const d = new demo()
-
-// // 组件通讯  d现在就是vc
-// Vue.prototype.x = d
 
 
 Vue.prototype.request = request;

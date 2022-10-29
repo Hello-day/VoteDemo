@@ -213,9 +213,6 @@ export default {
           this.$message.success("登陆成功！")
           this.$router.push({
             name:"Manage",
-            query:{
-              username:this.loginUser.name
-            }
           })
         }
         else{
