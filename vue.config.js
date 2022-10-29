@@ -40,6 +40,11 @@ module.exports = {
                 changeOrigin: true,
                 ['^/option']:'',
             },
+            '/usvt':{
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                ['^/usvt']:'',
+            },
         }
     },
 
