@@ -69,7 +69,7 @@ export default {
     },
 
     votePageApper(i){
-      this.request.get("/?/?").then(res=>{  //查询是否投过票，没投票则进入投票页面
+      this.request.get("/usvt/check").then(res=>{  //查询是否投过票，没投票则进入投票页面
             if(res.code == 1){
               this.$router.push({
                 name:"VotePage",
@@ -91,7 +91,7 @@ export default {
     },
     
     list(){
-      this.$axios.get("/vote/list/"+this.Channel.id).then(res=>{
+      this.request.get("/vote/list/"+this.Channel.id).then(res=>{
         this.vote = res.data
         console.log(this.vote)
         console.log(this.ChannelId)
