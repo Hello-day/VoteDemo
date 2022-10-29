@@ -22,7 +22,7 @@
           <div v-show="flagOfstartCreate" class="voteArea" :key="100">
 
             <div class="headOfvoteData">
-              <span >投票名</span>
+              <span >{{voteItem.name}}</span>
             </div>
             <div class="voteCreate">
               <!--    现有投票-->
@@ -31,16 +31,15 @@
                   <div slot="header" class="clearfix">
                     <span>详细描述</span>
                   </div>
-                  <div v-for="o in 20" :key="o" class="text item">
-                    {{'内容 ' + o }}
+                  <div class="text item">
+                    {{voteItem.decription}}
                   </div>
                 </el-card>
 
                   <el-form ref="form" :model="form" label-width="100px">
-
                     <el-form-item label="投票选项">
                       <el-radio-group v-model="form.choose">
-                          <el-radio v-model="radio2" v-for="o in 4" :key="o" :label = "o" border>{{'备选项 ' + o }}</el-radio>
+                          <el-radio v-model="radio2" v-for="o in voteOpt" :key="o" :label = "o.id" border>{{o.optionName}}</el-radio>
                       </el-radio-group>
                     </el-form-item>
 
@@ -55,10 +54,7 @@
             </div>
           </div>
 
-          <!--eslint-disable-next-line-->
-
         </div>
-
 
       </div>
 
@@ -74,8 +70,8 @@ export default {
   name: "VoteContent",
   data(){
     return {
-      channel:[],
-      myVote:[],
+      voteOpt:[],   //当前投票项目的选项
+      voteItem: this.$route.query,   //当前投票项目
       user: localStorage.getItem("user"),
       flagOfstartCreate:true,
       form: {
@@ -86,6 +82,18 @@ export default {
   },
 
   methods:{
+
+    loadOpt(){
+      this.request.get("/option/",this.voteItem.id).then(res=>{   //获取当前投票内的选项
+        if(res.code == 1){
+          this.voteOpt=res.data
+        }else{
+          prompt(res.msg)
+        }
+
+      })
+    },
+
     goBack() {
       this.$router.go(-1)
     },
@@ -93,14 +101,14 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          alert('提交成功!');
         }else {
-          console.log('error submit!!');
+          console.log('提交失败！');
           return false;
         }
       });
 
-      this.request.post('/vote/add/', this.form).then(res=>{
+      this.request.post('/?/', this.form).then(res=>{    //用户选择的选项提交到位置
         if(res.code=="1"){
           this.$message.success("提交成功！")
         }
@@ -110,14 +118,9 @@ export default {
       })
     },
 
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-
-
   },
   created() {
-
+    this.loadOpt()
   }
 }
 

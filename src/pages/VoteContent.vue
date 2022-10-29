@@ -53,7 +53,7 @@ export default {
   name: "VoteContent",
   data(){
     return {
-      vote:[],
+      vote:[],  //存放频道内的投票项目
       count:0,
       Channel: this.$route.query,
       flagOfvoteCenter:true,
@@ -74,14 +74,14 @@ export default {
               this.$router.push({
                 name:"VotePage",
                 query:{
-                  channelId:i
+                  voteItem:i
                 }
               })
             }else if(res.code == 0){
               this.$router.push({
                 name:"VoteResult",
                 query:{
-                  channelId:i
+                  voteItem:i
                 }
               })
             }

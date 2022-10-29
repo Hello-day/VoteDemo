@@ -111,14 +111,9 @@ export default {
         }else{
           prompt(res.msg)
         }
-          
-        // console.log(this.channel)
+
       })
     },
-
-    // load () {
-    //   this.count += 2 //一次生成6个
-    // },
 
     voteContentApper(i){
       this.$router.push({
