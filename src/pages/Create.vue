@@ -8,7 +8,7 @@
                 我发起的投票
                 </span>
         <span class= "IconArea" style="flex: 2;font-size: 18px;font-weight: bold;color: #4E5C72;justify-content: end;display: flex">
-                   <el-button round icon="el-icon-edit" size="medium" @click="startCreate">新建投票</el-button>
+                   <el-button round size="medium" @click="startCreate" ref='btn1'>新建投票</el-button>
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -120,6 +120,7 @@ export default {
   name: "VoteContent",
   data(){
     return {
+      changeBtn:'返回',
       channel:[],
       myVote:[1,1,1],  //储存我创建的投票，里面数据删掉
       user: localStorage.getItem("user"),
@@ -145,6 +146,10 @@ export default {
     }
   },
   methods:{
+
+    goBack() {
+      this.$router.go(-1)
+    },
 
     closetextArea(i){   //删除投票
 
@@ -240,8 +245,12 @@ export default {
     //  this.count += 2
     //},
     startCreate(){
-      this.flagOftext = !this.flagOftext,
-          this.flagOfstartCreate = !this.flagOfstartCreate
+      var n = this.changeBtn;
+      this.changeBtn = this.$refs.btn1.$el.innerText;
+      //this.$refs.btn1是取上面id为btn1的元素（说id是不严谨的）
+      this.$refs.btn1.$el.innerText = n;
+      this.flagOftext = !this.flagOftext;
+      this.flagOfstartCreate = !this.flagOfstartCreate;
       // this.request.get("/channel/list")
     },
   },

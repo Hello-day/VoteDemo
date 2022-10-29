@@ -7,7 +7,7 @@
         <el-page-header @back="goBack" content="">
         </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                投票频道
+                频道内容
                 </span>
       </div>
       <!--            数据具体展示-->
