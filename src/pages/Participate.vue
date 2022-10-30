@@ -25,8 +25,8 @@
                 <!--    现有投票-->
                 <div class="voteNowHave">
                   <div>
-                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>666</span>
+                    投&nbsp;票&nbsp;详&nbsp;情&nbsp;:
+                    <span>{{i.description}}</span>
                   </div>
                 </div>
               </div>
@@ -51,10 +51,7 @@ export default {
       channel:[],
       myParticipate:[],
       user: localStorage.getItem("user"),
-      flagOfvoteCenter:false,
       flagOftext:true,
-      flagOfvoteData:true,
-      flagOfvoteContent:true,
 
     }
   },

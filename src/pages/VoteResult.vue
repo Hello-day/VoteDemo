@@ -31,7 +31,7 @@
                   </div>
                   <div v-for="o in voteOpt" :key="o" class="text item">
                     {{o.optionName}}
-                    <el-progress :text-inside="true" :stroke-width="26" :percentage="optCnt"></el-progress>
+                    <el-progress :text-inside="true" :stroke-width="26" :percentage="optPercentage[o]"></el-progress>
                   </div>
 
                 </el-card>
@@ -39,8 +39,6 @@
               </div>
             </div>
           </div>
-
-          <!--eslint-disable-next-line-->
 
         </div>
 
@@ -59,11 +57,10 @@ export default {
   name: "VoteContent",
   data(){
     return {
-      voteOpt:[],   //当前投票项目的选项
-      voteItem: this.$route.query,   //当前投票项目
-      optCnt: '',//暂存每个选项得票占比
-      channel:[],
-      myVote:[],
+      total:0,//总投票数
+      voteOpt:[],   //储存当前投票项目的选项信息
+      voteItem: this.$route.query,   //当前投票项目信息
+      optPercentage: [],//暂存每个选项得票占比
     }
   },
 
@@ -79,6 +76,20 @@ export default {
       })
     },
 
+    loadPercent(){
+      for(let i in this.voteOpt){
+
+        this.total += this.voteOpt[i].cnt //计算总投票数
+
+      }
+
+      for(let i in this.voteOpt){
+
+       this.optPercentage[i] = Math.round((this.voteOpt[i].cnt / this.total) * 10000) / 100.0;  //voteOpt内的变量名随便写的，根据返回的改
+
+      }
+    },
+
     goBack() {
       this.$router.go(-1)
     },
@@ -86,7 +97,8 @@ export default {
 
   },
   created() {
-
+    this.loadOpt()
+    this.loadPercent()
   }
 }
 

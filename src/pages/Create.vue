@@ -95,8 +95,8 @@
                 <!--    现有投票-->
                 <div class="voteNowHave">
                   <div>
-                    现&nbsp;有&nbsp;投&nbsp;票&nbsp;项:
-                    <span>{{i.cnt}}</span>
+                    投&nbsp;票&nbsp;详&nbsp;情&nbsp;:
+                    <span>{{i.description}}</span>
                   </div>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default {
     return {
       changeBtn:'返回',
       channel:[],
-      myVote:[1,1,1],  //储存我创建的投票，里面数据删掉
+      myVote:[],  //储存我创建的投票，里面数据删掉
       user: localStorage.getItem("user"),
       flagOfvoteCenter:false,
       flagOftext:true,
