@@ -8,6 +8,7 @@
                 我发起的投票
                 </span>
         <span class= "IconArea" style="flex: 2;font-size: 18px;font-weight: bold;color: #4E5C72;justify-content: end;display: flex">
+                   <el-button round size="medium" @click="open">新建频道</el-button>
                    <el-button round size="medium" @click="startCreate" ref='btn1'>新建投票</el-button>
                 </span>
       </div>
@@ -146,6 +147,40 @@ export default {
     }
   },
   methods:{
+    open() {
+      this.$prompt('请输入频道名', '新建频道', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,  //用了个简单正则，判断输入是否为空
+        inputErrorMessage: '频道名不能为空！'
+      }).then(({ value }) => {
+        this.request.post('/vote/?/',value).then(res=>{  //路径没配，value为输入的频道名称
+          if(res.code=="1"){
+            this.$message({
+              type: 'success',
+              message: '新建频道名: ' + value
+            });
+
+            this.request.get("/channel/list").then(res=>{ //刷新频道列表
+              if(res.code == 1){
+                this.channel=res.data
+              }else{
+                prompt(res.msg)
+              }
+            });
+          }
+          else{
+            this.$message.error("新建失败！")
+          }
+        })
+
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消新建'
+        });
+      });
+    },
 
     goBack() {
       this.$router.go(-1)
@@ -254,6 +289,7 @@ export default {
     //  this.count += 2
     //},
     startCreate(){
+
       var n = this.changeBtn;
       this.changeBtn = this.$refs.btn1.$el.innerText;
       //this.$refs.btn1是取上面id为btn1的元素（说id是不严谨的）
