@@ -32,7 +32,7 @@
                     <span>详细描述</span>
                   </div>
                   <div class="text item">
-                    {{voteItem.decription}}
+                    {{voteItem.description}}
                   </div>
                 </el-card>
 
@@ -71,7 +71,7 @@ export default {
   data(){
     return {
       voteOpt:[],   //当前投票项目的选项
-      voteItem: this.$route.query,   //当前投票项目
+      voteItem: this.$route.query.voteItem,   //当前投票项目
       user: localStorage.getItem("user"),
       flagOfstartCreate:true,
       form: {
@@ -84,11 +84,10 @@ export default {
   methods:{
 
     loadOpt(){
-      this.request.get("/option/",this.voteItem.id).then(res=>{   //获取当前投票内的选项
+      this.$axios.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
+        // console.log(this.voteItem)
         if(res.code == 1){
           this.voteOpt=res.data
-        }else{
-          prompt(res.msg)
         }
 
       })
@@ -120,6 +119,7 @@ export default {
 
   },
   created() {
+    console.log(this.voteItem)
     this.loadOpt()
   }
 }

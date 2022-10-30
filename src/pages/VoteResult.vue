@@ -59,18 +59,23 @@ export default {
     return {
       total:0,//总投票数
       voteOpt:[],   //储存当前投票项目的选项信息
-      voteItem: this.$route.query,   //当前投票项目信息
+      voteItem: this.$route.query.voteItem,   //当前投票项目信息
       optPercentage: [],//暂存每个选项得票占比
+      
+      
+      optCnt: '',//暂存每个选项得票占比
+      channel:[],
+      myVote:[],
     }
   },
 
   methods:{
     loadOpt(){
-      this.request.get("/option/",this.voteItem.id).then(res=>{   //获取当前投票内的选项
+      this.request.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
         if(res.code == 1){
           this.voteOpt=res.data
         }else{
-          prompt(res.msg)
+          // prompt(res.msg)
         }
 
       })

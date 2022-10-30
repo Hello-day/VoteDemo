@@ -74,7 +74,7 @@
           </div>
 
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in myVote">
+          <transition-group name="list-complete" tag="p" appear v-for="i in channel">
             <div v-show="flagOftext" class="textArea" :key="i">
               <div class="headOfvoteData">
                 <el-popover
