@@ -29,9 +29,9 @@
                   <div slot="header" class="clearfix">
                     <span>条形图</span>
                   </div>
-                  <div v-for="o in voteOpt" :key="o" class="text item">
+                  <div v-for=" o in voteOpt" :key="o" class="text item">
                     {{o.optionName}}
-                    <el-progress :text-inside="true" :stroke-width="26" :percentage="optPercentage[o]"></el-progress>
+                    <el-progress :text-inside="true" :stroke-width="26" :percentage="o.percent"></el-progress>
                   </div>
 
                 </el-card>
@@ -72,27 +72,28 @@ export default {
   methods:{
     loadOpt(){
       this.request.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
-        if(res.code == 1){
-          this.voteOpt=res.data
-        }else{
-          // prompt(res.msg)
-        }
-
+        
+        this.voteOpt=res.data
+        console.log(this.voteOpt)
+        this.loadPercent();
       })
     },
 
     loadPercent(){
-      for(let i in this.voteOpt){
+      for(let i=0;i<this.voteOpt.length;i++){
 
         this.total += this.voteOpt[i].cnt //计算总投票数
-
+        this.voteOpt[i].percent = 0;
       }
+      // console.log(this.total)
+      if(this.total!=0){
+        for(let i=0;i<this.voteOpt.length;i++){
 
-      for(let i in this.voteOpt){
+          this.voteOpt[i].percent = Math.round((this.voteOpt[i].cnt / this.total) * 10000) / 100.0;  //voteOpt内的变量名随便写的，根据返回的改
 
-       this.optPercentage[i] = Math.round((this.voteOpt[i].cnt / this.total) * 10000) / 100.0;  //voteOpt内的变量名随便写的，根据返回的改
-
+        }
       }
+      // console.log(this.optPercentage)
     },
 
     goBack() {
@@ -103,7 +104,7 @@ export default {
   },
   created() {
     this.loadOpt()
-    this.loadPercent()
+    // this.loadPercent()
   }
 }
 

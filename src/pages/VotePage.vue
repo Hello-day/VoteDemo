@@ -38,14 +38,14 @@
 
                   <el-form ref="form" :model="form" label-width="100px">
                     <el-form-item label="投票选项">
-                      <el-radio-group v-model="form.choose">
+                      <el-radio-group v-model="form.id">
                           <el-radio v-model="radio2" v-for="o in voteOpt" :key="o" :label = "o.id" border>{{o.optionName}}</el-radio>
                       </el-radio-group>
                     </el-form-item>
 
                     <el-form-item>
                       <el-button type="primary" @click="submitForm('form')">提交投票</el-button>
-                      <el-button>取消</el-button>
+                      <el-button @click="goBack()">取消</el-button>
                       </el-form-item>
 
                   </el-form>
@@ -75,7 +75,8 @@ export default {
       user: localStorage.getItem("user"),
       flagOfstartCreate:true,
       form: {
-        choose: ''
+        id: '',
+        voteId: ''
       }
 
     }
@@ -84,11 +85,11 @@ export default {
   methods:{
 
     loadOpt(){
-      this.$axios.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
+      this.request.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
         // console.log(this.voteItem)
-        if(res.code == 1){
-          this.voteOpt=res.data
-        }
+        
+          this.voteOpt  = res.data
+          console.log(this.voteOpt)
 
       })
     },
@@ -106,8 +107,8 @@ export default {
           return false;
         }
       });
-
-      this.request.post('/?/', this.form).then(res=>{    //用户选择的选项提交到位置
+      this.form.voteId = this.voteItem.id;
+      this.request.post('/usvt', this.form).then(res=>{    //用户选择的选项提交到位置
         if(res.code=="1"){
           this.$message.success("提交成功！")
         }
@@ -115,11 +116,12 @@ export default {
           this.$message.error("提交失败！")
         }
       })
+      this.goBack();
     },
 
   },
   created() {
-    console.log(this.voteItem)
+    // console.log(this.voteItem)
     this.loadOpt()
   }
 }
