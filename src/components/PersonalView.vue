@@ -27,19 +27,11 @@
                         <el-dropdown-item>
                             <span  style="width: 100%;height: 100%" @click="closetextArea">每日一句</span>
                         </el-dropdown-item>
-                        <el-dropdown-item>
-                            <span style="width: 100%;height: 100%" @click="closenoticeArea">暂时没用</span>
-                        </el-dropdown-item>
-                        <el-dropdown-item>
-                            <span  style="width: 100%;height: 100%" @click="closedealtArea">暂时没用</span>
-                        </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
 <!--            图标区-->
             <div class="IconArea">
-                <i style="position: relative ;display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
-                 line-height: 30px" class="el-icon-message-solid"></i>
                 <i style="display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
                line-height: 30px" class="el-icon-remove-outline" @click="displayNone"></i>
             </div>
@@ -121,18 +113,6 @@
                 </div>
             </div>
 
-            <!--        处理事项-->
-            <div v-show="flagOfdealtArea" class="dealtArea" :key="3">
-                <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closedealtArea"></i>
-              <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">暂时没用</span>
-            </div>
-
-            <!--      消息通知-->
-            <div v-show="flagOfnotice" class="noticeArea" :key="4">
-                <i style="position: absolute; right: 15px;top: 10px;font-size: 18px;font-weight: bold;z-index:5" class="el-icon-close close" @click="closenoticeArea"></i>
-              <span style="flex: 1;display: flex;align-items: center;color: #333;padding-left: 15px;font-weight: bolder;font-size: 16px">暂时没用</span>
-
-            </div>
             </transition-group>
         </div>
 
@@ -151,8 +131,6 @@
                 flagOfPersonalCenter:false,
                 flagOftext:true,
                 flagOfPersonalData:true,
-                flagOfdealtArea:true,
-                flagOfnotice:true,
                 localTionObj:{},
                 sentence:"",
                 user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):{},
@@ -169,12 +147,6 @@
             },
             closePersonalDataArea(){
                 this.flagOfPersonalData = !this.flagOfPersonalData
-            },
-            closedealtArea(){
-                this.flagOfdealtArea = !this.flagOfdealtArea
-            },
-            closenoticeArea(){
-                this.flagOfnotice = !this.flagOfnotice
             },
 
             loadSentence(){
@@ -246,31 +218,11 @@
         flex-direction: column;
         background-image: radial-gradient(circle farthest-side at 10% 90%, #FFE8EA, #EDF3FF 70%, #EDF2FB);
     }
-.personalDataArea div{
+    .personalDataArea div{
     margin-top: 0px;
-}
+    }
 
-    .dealtArea{
-        width: 80%;
-        height: 200px;
-        background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-        margin-left: 30px;
-        position: relative;
-    }
-    .noticeArea{
-        width: 80%;
-        height: 200px;
-        margin-left: 30px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow-y: auto;
-        background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-    }
-    .noticeArea div{
-        margin-top: 0px;
-    }
+
     .headAreaOfUser{
         flex: 5;
         height: 100%;
