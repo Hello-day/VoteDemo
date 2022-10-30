@@ -76,13 +76,15 @@ export default {
 
         // console.log(this.channel)
       })
+      console.log(this.myParticipate)
     },
 
-    loadMyPart() {
-      this.$axios.get("/vote/mine").then(res => {
-        this.myVote = res.data
-      })
-    },
+    // loadMyPart() {
+    //   this.request.get("/vote/mine").then(res => {
+    //     this.myVote = res.data
+    //     console.log(this.myVote)
+    //   })
+    // },
 
     //load () {
     //  this.count += 2
@@ -91,7 +93,7 @@ export default {
   },
   created() {
     this.list()
-    this.loadMyPart()
+    // this.loadMyPart()
   }
 }
 

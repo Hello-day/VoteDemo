@@ -92,7 +92,7 @@
 
                 <span >{{i.name}}</span>
               </div>
-              <div class="voteChannel">
+              <div class="voteChannel" @click="votePageApper(i)">
                 <!--    现有投票-->
                 <div class="voteNowHave">
                   <div>
@@ -147,18 +147,26 @@ export default {
     }
   },
   methods:{
+    votePageApper(i){
+      this.$router.push({
+                name:"VoteResult",
+                query:{
+                  voteItem:i
+                }
+            })
+    },
     open() {
       this.$prompt('请输入频道名', '新建频道', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,  //用了个简单正则，判断输入是否为空
         inputErrorMessage: '频道名不能为空！'
-      }).then(({ value }) => {
-        this.request.post('/vote/?/',value).then(res=>{  //路径没配，value为输入的频道名称
+      }).then(( value ) => {
+        this.request.post('/channel/add/',value).then(res=>{  //路径没配，value为输入的频道名称
           if(res.code=="1"){
             this.$message({
               type: 'success',
-              message: '新建频道名: ' + value
+              message: '新建频道名: ' + value.value
             });
 
             this.request.get("/channel/list").then(res=>{ //刷新频道列表
