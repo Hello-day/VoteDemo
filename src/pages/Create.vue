@@ -74,7 +74,7 @@
           </div>
 
           <!--eslint-disable-next-line-->
-          <transition-group name="list-complete" tag="p" appear v-for="i in channel">
+          <transition-group name="list-complete" tag="p" appear v-for="i in myVote">
             <div v-show="flagOftext" class="textArea" :key="i">
               <div class="headOfvoteData">
                 <el-popover
@@ -153,12 +153,17 @@ export default {
 
     closetextArea(i){   //删除投票
 
-      this.myVote.splice(i-1, 1);  //从数组中删除，使这项不显示，应该放到删除成功下面，此处为测试用
+      // this.myVote.splice(i-1, 1);  //从数组中删除，使这项不显示，应该放到删除成功下面，此处为测试用
 
-      this.request.post('/？/？', this.myVote.id).then(res=>{  //路由没配
+      this.request.get('/vote/delete/'+ i.id).then(res=>{  //路由没配
         if(res.code=="1"){
           this.$message.success("删除成功！")
-          //this.myVote.splice(i-1, 1);
+          // this.myVote.splice(i-1, 1);
+          this.request.get("/vote/mine").then(res => {
+            this.myVote = res.data
+        })
+          
+        
         }
         else{
           this.$message.error("删除失败！")
@@ -175,13 +180,14 @@ export default {
           prompt(res.msg)
         }
         // console.log(this.channel)
-      })
-    },
-    loadMyVote() {
-      this.$axios.get("/vote/mine",this.user.name).then(res => {
+        this.request.get("/vote/mine").then(res => {
         this.myVote = res.data
+        })
       })
     },
+    // loadMyVote() {
+      
+    // },
     submitForm() {
       // this.$refs[formName].validate((valid) => {
       //   if (valid) {
@@ -225,6 +231,9 @@ export default {
         else{
           this.$message.error("提交失败！")
         }
+        this.request.get("/vote/mine").then(res => {
+          this.myVote = res.data
+        })
       })
 
     },
@@ -256,7 +265,7 @@ export default {
   },
   created() {
     this.list()
-    this.loadMyVote()
+    // this.loadMyVote()
   }
 }
 </script>

@@ -21,7 +21,7 @@
               <div class="headOfvoteData">
                 <span >{{i.name}}</span>
               </div>
-              <div class="voteChannel">
+              <div class="voteChannel" @click="votePageApper(i)">
                 <!--    现有投票-->
                 <div class="voteNowHave">
                   <div>
@@ -57,11 +57,19 @@ export default {
   },
 
   methods:{
+    votePageApper(i){
+      this.$router.push({
+                name:"VoteResult",
+                query:{
+                  voteItem:i
+                }
+            })
+    },
 
     list(){
-      this.request.get("/channel/list").then(res=>{
+      this.request.get("/usvt/participate").then(res=>{
         if(res.code == 1){
-          this.channel=res.data
+          this.myParticipate=res.data
         }else{
           prompt(res.msg)
         }
@@ -71,7 +79,7 @@ export default {
     },
 
     loadMyPart() {
-      this.$axios.get("/vote/mine",this.user.name).then(res => {
+      this.$axios.get("/vote/mine").then(res => {
         this.myVote = res.data
       })
     },

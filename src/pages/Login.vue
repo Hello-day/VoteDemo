@@ -234,7 +234,7 @@ export default {
         user.name = this.regUser.regUsername
         user.password = this.regUser.regPwd
         this.request.post("/user/register",user).then(res=>{
-          if(res.code==="1"){
+          if(res.code=="1"){
             this.$message.success("注册成功！")
             this.regUser={
               regUsername:'',
@@ -243,7 +243,7 @@ export default {
             }
             this.changeToLogin()
           }
-          if(res.code==="0"){
+          if(res.code=="0"){
             this.$message.error(res.msg)
             return
           }
