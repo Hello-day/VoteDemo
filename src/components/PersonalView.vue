@@ -122,6 +122,7 @@
 
 <script>
     import 'animate.css'
+
     // eslint-disable-next-line no-unused-vars
     import axios, {Axios as request} from "axios";
     export default {

@@ -7,7 +7,7 @@
         <el-page-header @back="goBack" content="">
         </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                {{ voteItem.name }}
+               {{ voteItem.name }}
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -22,17 +22,22 @@
             <div class="headOfvoteData">
               <span >当前投票结果</span>
             </div>
-            <div class="voteCreate">
+             <div class="voteCreate">
               <!--    现有投票-->
-              <div  class="voteEdit" >
-                <el-card class="box-card">
-                  <div slot="header" class="clearfix">
-                    <span>条形图</span>
-                  </div>
-                  <div v-for=" o in voteOpt" :key="o" class="text item">
-                    {{o.optionName}}
-                    <el-progress :text-inside="true" :stroke-width="26" :percentage="o.percent"></el-progress>
-                  </div>
+              <div  class="voteEdit"  >
+                <el-card class="box-card" >
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                      <el-tab-pane label="条形图" name="first" >
+                        <div  v-for=" o in voteOpt" :key="o" class="text item">
+                          {{o.optionName}}
+                          <el-progress :text-inside="true" :stroke-width="26" :percentage="o.percent"></el-progress>
+                        </div>
+                      </el-tab-pane>
+                      <el-tab-pane label="饼状图" name="second" stretch="true" >
+                        <div class="echart" id="mychart" :style="myChartStyle"></div>
+                      </el-tab-pane>
+
+                    </el-tabs>
 
                 </el-card>
 
@@ -51,12 +56,15 @@
 
 <script>
 import 'animate.css'
+import * as echarts from "echarts";
+
 // eslint-disable-next-line no-unused-vars
 import axios, {Axios as request} from "axios";
 export default {
   name: "VoteContent",
   data(){
     return {
+
       total:0,//总投票数
       voteOpt:[],   //储存当前投票项目的选项信息
       voteItem: this.$route.query.voteItem,   //当前投票项目信息
@@ -66,10 +74,31 @@ export default {
       optCnt: '',//暂存每个选项得票占比
       channel:[],
       myVote:[],
+      myChart: {},
+      
+      pieData: [][
+        {
+          value: '',
+          name: ''
+        }
+      ],
+      pieName: [],
+      myChartStyle: { width: "700px", height: "300px" } //图表样式
     }
   },
-
+  mounted() {
+    this.initDate(); //数据初始化
+    this.initEcharts();
+  },
   methods:{
+    loadPieData(){
+      for(let i=0;i<this.voteOpt.length;i++){
+
+        this.pieData[i].value = this.voteOpt[i].cnt //投票数
+        this.pieData[i].name = this.voteOpt[i].optionName //投票数
+      }
+    },
+
     loadOpt(){
       this.request.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
         
@@ -100,10 +129,55 @@ export default {
       this.$router.go(-1)
     },
 
+    initDate() {
+      for (let i = 0; i < this.voteOpt.length; i++) {
+        this.pieName[i] = this.voteOpt[i].optionName;
+      }
+    },
+    initEcharts() {
+      //数据初始化
+      for(let i=0;i<this.voteOpt.length;i++){
 
+        this.pieData[i].value = this.voteOpt[i].cnt //投票数
+        this.pieData[i].name = this.voteOpt[i].optionName //名字
+      }
+      // 饼图
+      const option = {
+        legend: {
+          // 图例
+          data: this.pieName,
+          right: "10%",
+          top: "30%",
+          orient: "vertical"
+        },
+
+        series: [
+          {
+            type: "pie",
+            label: {
+              show: true,
+              formatter: "{b} : {c} ({d}%)" // b代表名称，c代表对应值，d代表百分比
+            },
+            radius: "50%", //饼图半径
+            data: this.pieData
+          }
+        ]
+      };
+      console.log(this.seriesData);
+
+      this.myChart = echarts.init(document.getElementById("mychart"));
+      this.myChart.setOption(option);
+      //随着屏幕大小调节图表
+      window.addEventListener("resize", () => {
+        this.myChart.resize();
+      });
+    }
   },
+
+
   created() {
-    this.loadOpt()
+   this.loadOpt()
+
     // this.loadPercent()
   }
 }
@@ -127,7 +201,7 @@ export default {
   justify-content: center;
 }
 
-.viewOfvoteData{
+.viewOfvoteData {
   width: 100%;
   height: 570px;
   background-color: #F5F7F9;
@@ -171,7 +245,7 @@ export default {
 
 }
 
-.voteEdit{
+.voteEdit {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -186,7 +260,7 @@ export default {
 
 }
 
-.voteArea{
+.voteArea {
   display: flex;
   flex-direction: column;
   align-items: center;
