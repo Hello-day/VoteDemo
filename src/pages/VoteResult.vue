@@ -7,7 +7,7 @@
         <el-page-header @back="goBack" content="">
         </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-                {{ voteItem.name }}
+                  {{ voteItem.name }}
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -83,7 +83,6 @@ export default {
   },
   mounted() {
 
-    this.initEcharts();
   },
   methods:{
 
@@ -93,6 +92,8 @@ export default {
         this.voteOpt=res.data
         console.log(this.voteOpt)
         this.loadPercent();
+        this.initDate(); //数据初始化
+        this.initEcharts();
       })
     },
 
@@ -169,7 +170,7 @@ export default {
   created() {
 
     this.loadOpt()
-    this.initDate(); //数据初始化
+
   }
 }
 
