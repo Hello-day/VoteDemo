@@ -262,7 +262,7 @@ export default {
   margin-left: 30px;
   position: relative;
   background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
 
 .voteArea div{

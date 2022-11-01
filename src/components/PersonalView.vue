@@ -32,6 +32,8 @@
             </div>
 <!--            图标区-->
             <div class="IconArea">
+               <i style="display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
+               line-height: 30px" class="el-icon-switch-button" @click="logout"></i>
                 <i style="display: block;width: 30px;height: 30px;border-radius: 15px;background-color:#FFFFFF;text-align: center;
                line-height: 30px" class="el-icon-remove-outline" @click="displayNone"></i>
             </div>
@@ -140,6 +142,37 @@
             }
         },
         methods:{
+            logout(){
+              this.$confirm('确定退出系统?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'info'
+              }).then(() => {
+                this.request.post('/logout/?',this.user).then(res=>{   //退出登录路由
+                  if(res.code=="1"){
+                    this.$router.push("/login")
+                    this.$message({
+                      type: 'success',
+                      message: '退出成功!'
+                    })
+                  }else {
+                    this.$message.error("退出失败!")
+                  }
+                });
+
+                setTimeout(() => {
+                  location.reload() // 强制刷新
+                }, 100)
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消退出'
+                })
+              })
+
+
+            },
+
             displayNone(){
                 this.$bus.$emit('personalCenterChange',this.flagOfPersonalCenter)
             },

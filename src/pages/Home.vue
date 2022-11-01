@@ -8,7 +8,7 @@
                 在线投票系统
                 </span>
                 <span style="flex: 2;font-size: 12px;font-weight: bold;color: #4E5C72;justify-content: end;display: flex">
-                    以下数据实时更新
+
                 </span>
             </div>
 <!--            数据具体展示-->
@@ -193,7 +193,7 @@ export default {
   margin-left: 30px;
   position: relative;
   background-image: radial-gradient(circle farthest-side at 10% 90%, #FCEAED, #EDF3FF 70%, #EDF2FB);
-
+   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05);
   }
 
   .textArea div{
