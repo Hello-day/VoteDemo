@@ -69,20 +69,15 @@ export default {
       voteOpt:[],   //储存当前投票项目的选项信息
       voteItem: this.$route.query.voteItem,   //当前投票项目信息
       optPercentage: [],//暂存每个选项得票占比
-      
-      
+
       optCnt: '',//暂存每个选项得票占比
       channel:[],
       myVote:[],
       myChart: {},
 
-      pieData: [][
-        {
-          value: '',
-          name: ''
-        }
-      ],
+      pieData: [],
       pieName: [],
+
       myChartStyle: { width: "700px", height: "300px" } //图表样式
     }
   },
@@ -91,13 +86,6 @@ export default {
     this.initEcharts();
   },
   methods:{
-    loadPieData(){
-      for(let i=0;i<this.voteOpt.length;i++){
-
-        this.pieData[i].value = this.voteOpt[i].cnt //投票数
-        this.pieData[i].name = this.voteOpt[i].optionName //投票数
-      }
-    },
 
     loadOpt(){
       this.request.get("/option/"+this.voteItem.id).then(res=>{   //获取当前投票内的选项
@@ -130,17 +118,20 @@ export default {
     },
 
     initDate() {
+
       for (let i = 0; i < this.voteOpt.length; i++) {
         this.pieName[i] = this.voteOpt[i].optionName;
       }
     },
+
     initEcharts() {
       //数据初始化
       for(let i=0;i<this.voteOpt.length;i++){
-
+        this.pieData[i]=new Object()
         this.pieData[i].value = this.voteOpt[i].cnt //投票数
         this.pieData[i].name = this.voteOpt[i].optionName //名字
       }
+
       // 饼图
       const option = {
         legend: {
@@ -178,7 +169,6 @@ export default {
   created() {
    this.loadOpt()
 
-    // this.loadPercent()
   }
 }
 
