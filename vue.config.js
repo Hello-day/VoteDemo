@@ -21,27 +21,27 @@ module.exports = {
     devServer: {
         proxy: {
             '/user':{
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8088',
                 changeOrigin: true,
                 ['^/user']:'',
             },
             '/channel':{
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8088',
                 changeOrigin: true,
                 ['^/channel']:'',
             },
             '/vote':{
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8088',
                 changeOrigin: true,
                 ['^/vote']:'',
             },
             '/option':{
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8088',
                 changeOrigin: true,
                 ['^/option']:'',
             },
             '/usvt':{
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8088',
                 changeOrigin: true,
                 ['^/usvt']:'',
             },

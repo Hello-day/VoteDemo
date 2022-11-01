@@ -26,14 +26,14 @@
               <!--    现有投票-->
               <div  class="voteEdit"  >
                 <el-card class="box-card" >
-                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                    <el-tabs v-model="activeTab" @tab-click="handleClick">
                       <el-tab-pane label="条形图" name="first" >
                         <div  v-for=" o in voteOpt" :key="o" class="text item">
                           {{o.optionName}}
                           <el-progress :text-inside="true" :stroke-width="26" :percentage="o.percent"></el-progress>
                         </div>
                       </el-tab-pane>
-                      <el-tab-pane label="饼状图" name="second" stretch="true" >
+                      <el-tab-pane label="饼状图" name="second"  >
                         <div class="echart" id="mychart" :style="myChartStyle"></div>
                       </el-tab-pane>
 
@@ -64,7 +64,7 @@ export default {
   name: "VoteContent",
   data(){
     return {
-
+      activeTab:'first',
       total:0,//总投票数
       voteOpt:[],   //储存当前投票项目的选项信息
       voteItem: this.$route.query.voteItem,   //当前投票项目信息
