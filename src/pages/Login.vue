@@ -39,7 +39,7 @@
         >
           <!-- 登录注册按钮 -->
           <div v-show="isShow" class="btnArea">
-            <el-button type="success" round style="background-color: #4682B4;letter-spacing: 5px" @click="UserLogin"  >登录</el-button>
+            <el-button type="success" size = "medium" round style="background-color: #e09bbf; border: 1px solid #ffffff;" @click="UserLogin"  >登&nbsp;&nbsp;&nbsp;录</el-button>
           </div>
         </transition>
       </div>
@@ -93,7 +93,7 @@
         >
           <!-- 注册按钮-->
           <div  v-show="!isShow" class="registBtn">
-            <el-button type="success" round style="background-color: #4682B4;letter-spacing: 5px" @click="userRegister">注册</el-button>
+            <el-button type="success" size = "medium" round style="background-color: #e09bbf;border: 1px solid #ffffff;" @click="userRegister">注&nbsp;&nbsp;&nbsp;册</el-button>
           </div>
         </transition>
       </div>
@@ -117,12 +117,12 @@
           <!-- 没有用户输入用户名或者找不到用户名的时候 -->
           <div v-show="isShow" style="display: flex;flex-direction: column;align-items: center;justify-content: center;width: 100%;height: 100%">
             <!-- 欢迎语 -->
-            <div style="flex: 2;display: flex;align-items: center;font-size: 22px;color: #FFFFFF;font-weight: bold">
+            <div style="flex: 2;display: flex;align-items: center;font-size: 22px;color: #ffffff;font-weight: bold">
               欢迎登入网络投票系统
             </div>
             <!-- 欢迎图片 -->
             <div style="flex: 2">
-              <el-button type="success"  style="background-color:#4682B4;border: 1px solid #ffffff;" round @click="changeToRegiest">还没有账户？点击注册</el-button>
+              <el-button type="success"  style="background-color:#e09bbf;border: 1px solid #ffffff;" round @click="changeToRegiest">还没有账户？点击注册</el-button>
             </div>
           </div>
         </transition>
@@ -144,7 +144,7 @@
             </div>
             <!-- 欢迎图片 -->
             <div style="flex: 2">
-              <el-button type="success"  style="background-color:#4682B4;border: 1px solid #ffffff;" round @click="changeToLogin">已有账户？点击登录</el-button>
+              <el-button type="success"  style="background-color:#e09bbf;border: 1px solid #ffffff;" round @click="changeToLogin">已有账户？点击登录</el-button>
             </div>
           </div>
         </transition>
@@ -263,7 +263,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../assets/images/sea.jpg");
+  background-image: url("../assets/images/wall1.png");
   background-size: 100%;
 }
 .loginAndRegist{
@@ -274,7 +274,7 @@ export default {
   overflow: hidden;
 }
 .loginArea{
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   height: 400px;
@@ -290,7 +290,7 @@ export default {
   border-bottom-right-radius: 15px;
   height: 400px;
   width: 350px;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -306,7 +306,7 @@ export default {
   z-index:2;
   top: 0;
   right: 0;
-  background-image: url("../assets/images/sky.jpg");
+  background-image: url("../assets/images/wall2.png");
   background-size: 90%;
 }
 .showInfo:hover{
@@ -316,10 +316,10 @@ export default {
 .title{
   width: 70%;
   flex:1;
-  border-bottom: 1px solid #4682B4;
+  border-bottom: 1px solid #e09bbf;
   display: flex;
   align-items: center;
-  color: #4682B4;
+  color: #e09bbf;
   font-weight: bold;
   font-size: 24px;
   display: flex;
@@ -347,7 +347,7 @@ export default {
   border: 1px solid gray;
 }
 .pwdArea input:focus{
-  border: 2px solid #4682B4;
+  border: 2px solid #e09bbf;
 }
 .btnArea{
   flex:1;
@@ -359,19 +359,19 @@ export default {
 .rigestTitle{
   width: 70%;
   flex: 1;
-  color: #4682B4;
+  color: #e09bbf;
   font-weight: bold;
   font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #4682B4;
+  border-bottom: 1px solid #e09bbf;
 }
 .registForm{
   flex: 2;
   display: flex;
   flex-direction: column;
-  color: #4682B4;
+  color: #e09bbf;
   font-size: 16px;
 }
 
@@ -384,10 +384,10 @@ export default {
   border: 1px solid gray;
 }
 .registForm input:focus{
-  border: 2px solid #4682B4;
+  border: 2px solid #e09bbf;
 }
 #elselect:focus{
-  border: 2px solid #4682B4;
+  border: 2px solid #e09bbf;
 }
 .registBtn{
   flex: 1;

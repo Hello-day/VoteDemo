@@ -75,7 +75,7 @@ export default {
       channel:[],
       myVote:[],
       myChart: {},
-      
+
       pieData: [][
         {
           value: '',
