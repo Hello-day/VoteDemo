@@ -7,7 +7,7 @@
         <el-page-header @back="goBack" content="">
         </el-page-header>
                 <span style="flex: 9;font-size: 18px;font-weight: bold">
-               {{ voteItem.name }}
+                {{ voteItem.name }}
                 </span>
       </div>
       <!--            数据具体展示-->
@@ -82,7 +82,7 @@ export default {
     }
   },
   mounted() {
-    this.initDate(); //数据初始化
+
     this.initEcharts();
   },
   methods:{
@@ -117,20 +117,20 @@ export default {
       this.$router.go(-1)
     },
 
-    initDate() {
+    initDate() {  //数据初始化
 
       for (let i = 0; i < this.voteOpt.length; i++) {
         this.pieName[i] = this.voteOpt[i].optionName;
       }
-    },
 
-    initEcharts() {
-      //数据初始化
       for(let i=0;i<this.voteOpt.length;i++){
         this.pieData[i]=new Object()
         this.pieData[i].value = this.voteOpt[i].cnt //投票数
         this.pieData[i].name = this.voteOpt[i].optionName //名字
       }
+    },
+
+    initEcharts() {
 
       // 饼图
       const option = {
@@ -167,8 +167,9 @@ export default {
 
 
   created() {
-   this.loadOpt()
 
+    this.loadOpt()
+    this.initDate(); //数据初始化
   }
 }
 
