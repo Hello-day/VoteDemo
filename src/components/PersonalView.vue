@@ -148,7 +148,7 @@
                 cancelButtonText: '取消',
                 type: 'info'
               }).then(() => {
-                this.request.post('/logout/?',this.user).then(res=>{   //退出登录路由
+                this.request.get('/user/logout').then(res=>{   //退出登录路由
                   if(res.code=="1"){
                     this.$router.push("/login")
                     this.$message({
